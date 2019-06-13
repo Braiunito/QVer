@@ -1,5 +1,4 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from Signup import Sign
 import xz_rc
 from validarcorreo import validarcorreo, verexist
 
@@ -57,7 +56,7 @@ class Pantalla_Signup(object):
         self.btn_sgte.setIconSize(QtCore.QSize(16, 16))
         self.btn_sgte.setObjectName("btn_sgte")
         self.btn_log = QtWidgets.QPushButton(self.frame)
-        self.btn_log.setGeometry(QtCore.QRect(50, 451, 211, 29))
+        self.btn_log.setGeometry(QtCore.QRect(50, 451, 250, 29))
         self.btn_log.setStyleSheet("color:rgb(10, 128, 255);\n"
         "font: 75 11pt \"Cantarell\";\n"
         "font-weight: bold;")
@@ -237,7 +236,7 @@ class Pantalla_Login(object):
         "font: 75 22pt \"Cantarell\";")
         self.lbl_tit.setObjectName("lbl_tit")
         self.lbl_stc = QtWidgets.QLabel(self.frame)
-        self.lbl_stc.setGeometry(QtCore.QRect(136, 130, 181, 31))
+        self.lbl_stc.setGeometry(QtCore.QRect(136, 130, 200, 31))
         self.lbl_stc.setStyleSheet("color: rgb(0, 0, 0);\n"
         "font: 75 14pt \"Cantarell\";")
         self.lbl_stc.setObjectName("lbl_stc")
@@ -277,18 +276,18 @@ class Pantalla_Login(object):
 
 
 
-	'''
-	TO DO 								DONE
-										Pantalla Login
-										Pantalla Sign Up
-	Pantalla Main Menu
-	Pantalla Quiz
-	Pantalla Profile
+'''
+TO DO 								DONE
+									Pantalla Login
+									Pantalla Sign Up
+Pantalla Main Menu
+Pantalla Quiz
+Pantalla Profile
 
 
-	Logueate()
-	Registrate()
-	Recomendame()
-	Ver_Perfil()
-	Calificar()
-	'''
+Logueate()
+Registrate()
+Recomendame()
+Ver_Perfil()
+Calificar()
+'''
