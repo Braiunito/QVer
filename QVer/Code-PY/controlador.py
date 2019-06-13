@@ -191,27 +191,6 @@ class Controlador_Signup(object):
                     info.show()
 
 
-        
-
-
-''' ????  Llamada a sign creo
-def logearse(self):
-    from Login import Ui_Dialog
-    self.ventana = QtWidgets.QMainWindow()
-    self.ui=Ui_Dialog()
-    self.ui.setupUi(self.ventana)
-    self.ventana.setGeometry(280, 65,781,575)
-    self.ventana.show()
-'''
-
-
-		
-
-#INIT
-if __name__ == "__main__":
-    Login = Controlador_Login()
-    sys.exit(Login.app.exec_())
-
 
 #INSTANCIA LAS PANTALLAS
 LoginScreen=Controlador_Login()
@@ -235,6 +214,8 @@ def conectar(user='', password='', db=''):
                                  password='passwd',
                                  db='db')
     return connection
+
+
 
 #INIT DEL LOGIN
 if __name__ == "__main__":
