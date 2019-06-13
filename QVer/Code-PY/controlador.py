@@ -3,6 +3,10 @@ from validarcorreo import validarcorreo, verexist
 from Vista import *
 import sys
 
+
+
+
+
 class Controlador_Login(object):
     def __init__(self): 
         self.app = QtWidgets.QApplication(sys.argv)
@@ -10,11 +14,18 @@ class Controlador_Login(object):
         self.ventanalogin = Pantalla_Login()
         self.ventanalogin.setupUi(self.Dialog)
         self.function()
+
         self.Dialog.show()
 
     def function(self):
         self.ventanalogin.btn_sgte.clicked.connect(lambda:self.charge_confirm(self.ventanalogin.txt_pass, self.ventanalogin.txt_usr, self.ventanalogin.lbl_info))
         self.ventanalogin.btn_cc.clicked.connect(lambda:self.gotosign())
+
+
+    def function(self):
+        self.ventanalogin.btn_sgte.clicked.connect(lambda:self.charge_confirm(self.ventanalogin.txt_pass, self.ventanalogin.txt_usr, self.ventanalogin.lbl_info))
+        self.ventanalogin.btn_cc.clicked.connect(lambda:Mostrar_Sign())
+
 
     def charge_confirm(self, password, user, info):
         database = open ("database.txt", "r")
@@ -52,6 +63,7 @@ class Controlador_Login(object):
         database.close()
         #print (usrpass)
 
+
     def cerrar(self, ventana1):
         self.Dialog.show()
         ventana1.hide()
@@ -66,10 +78,12 @@ class Controlador_Login(object):
         self.Dialog.hide()
 
 
+
 class Controlador_Signup(object):
     def __init__(self): 
         self.app = QtWidgets.QApplication(sys.argv)
         self.Dialog = QtWidgets.QDialog()
+
         self.ventanasignup = Pantalla_Signup()
         self.ventanasignup.setupUi(self.Dialog)
         self.function()
@@ -86,6 +100,25 @@ class Controlador_Signup(object):
         else:
             self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
             self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
+
+        self.ventanasign = Pantalla_Signup()
+        self.ventanasign.setupUi(self.Dialog)
+        self.function()
+
+    def function(self):
+        self.ventanasign.btn_log.clicked.connect(lambda:Mostrar_Login())
+        self.ventanasign.btn_sgte.clicked.connect(lambda:self.registrar(self.ventanasign.txt_usr, self.ventanasign.txt_pass, self.ventanasign.txt_pass_con, self.ventanasign.lbl_info, self.ventanasign.txt_mail))
+        self.ventanasign.checkBox.toggled.connect(lambda:self.ver(self.ventanasign.checkBox,self.ventanasign.txt_pass, self.ventanasign.txt_pass_con))
+            
+
+    def ver(self, ch, txt_pass, txt_pass_con):
+        if ch.isChecked() == True:
+            self.ventanasign.txt_pass.setEchoMode(QtWidgets.QLineEdit.Normal)
+            self.ventanasign.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Normal)
+        else:
+            self.ventanasign.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
+            self.ventanasign.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
+
 
     def limpiar(self, *args):
         for x in args:
@@ -157,6 +190,7 @@ class Controlador_Signup(object):
                     info.setText("Ingrese solo nombre entre 4 y 15 caracteres.")
                     info.show()
 
+
         
 
 
@@ -178,4 +212,32 @@ if __name__ == "__main__":
     Login = Controlador_Login()
     sys.exit(Login.app.exec_())
 
+
+#INSTANCIA LAS PANTALLAS
+LoginScreen=Controlador_Login()
+SingupScreen=Controlador_Signup()
+
+
+#LLAMA A LAS PANTALLAS
+def Mostrar_Login():
+    LoginScreen.Dialog.show()
+    SingupScreen.Dialog.hide()
+def Mostrar_Sign():
+    LoginScreen.Dialog.hide()
+    SingupScreen.Dialog.show()
+
+
+#CONECTA A LA BD
+def conectar(user='', password='', db=''):
+    # Connect to the database
+    connection = pymysql.connect(host='localhost',
+                                 user='user',
+                                 password='passwd',
+                                 db='db')
+    return connection
+
+#INIT DEL LOGIN
+if __name__ == "__main__":
+    Mostrar_Login()
+    sys.exit(LoginScreen.app.exec_())
 		
