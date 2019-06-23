@@ -5,10 +5,6 @@ import pymysql
 #la clase controlador se fija en el algoritmo
 
 
-coneccion=conectar("root","42922075","qver")
-cur=coneccion.cursor()
-cur.execute("select * from peliculas limit 1")
-print(cur.fetchall())
 
 class Usuario(object):
 	def __init__(self, nombre,correo,contraseña):
@@ -56,12 +52,7 @@ class Usuario(object):
 	def modificarCalificacion(self,peli,resp):
 		for x in respuestas:
 			if(x.peli.getNombre()==peli.getNombre):
-				x.setRespuesta(resp)
-
-
-
-	
-
+				x.setRespuesta(resp)	
 
 
 class respuesta(object):

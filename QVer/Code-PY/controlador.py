@@ -1,11 +1,9 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from validarcorreo import validarcorreo, verexist
 from Vista import *
+from BDConnector import *
 import pymysql
 import sys
-
-
-
 
 
 class Controlador_Login(object):
@@ -29,15 +27,8 @@ class Controlador_Login(object):
 
 
     def charge_confirm(self, password, user, info):
-        database = open ("database.txt", "r")
-        usrpass=[]
         flag=False
-        for x in database:
-            usrpass=usrpass+x.split(",")
-        for x in usrpass:
-            bk=x.replace("\n", "")
-            usrpass[usrpass.index(x)]=bk
-        for x in usrpass:
+        for x in usuarios_cursor:
             try:
                 if (x == user.text()) and (usrpass[usrpass.index(x)+1]==password.text()):
                     flag=True
@@ -79,7 +70,6 @@ class Controlador_Login(object):
         self.Dialog.hide()
 
 
-
 class Controlador_Signup(object):
     def __init__(self): 
         self.app = QtWidgets.QApplication(sys.argv)
@@ -102,23 +92,23 @@ class Controlador_Signup(object):
             self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
             self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
 
-        self.ventanasign = Pantalla_Signup()
-        self.ventanasign.setupUi(self.Dialog)
+        self.ventanasignup = Pantalla_Signup()
+        self.ventanasignup.setupUi(self.Dialog)
         self.function()
 
     def function(self):
-        self.ventanasign.btn_log.clicked.connect(lambda:Mostrar_Login())
-        self.ventanasign.btn_sgte.clicked.connect(lambda:self.registrar(self.ventanasign.txt_usr, self.ventanasign.txt_pass, self.ventanasign.txt_pass_con, self.ventanasign.lbl_info, self.ventanasign.txt_mail))
-        self.ventanasign.checkBox.toggled.connect(lambda:self.ver(self.ventanasign.checkBox,self.ventanasign.txt_pass, self.ventanasign.txt_pass_con))
+        self.ventanasignup.btn_log.clicked.connect(lambda:Mostrar_Login())
+        self.ventanasignup.btn_sgte.clicked.connect(lambda:self.registrar(self.ventanasignup.txt_usr, self.ventanasignup.txt_pass, self.ventanasignup.txt_pass_con, self.ventanasignup.lbl_info, self.ventanasignup.txt_mail))
+        self.ventanasignup.checkBox.toggled.connect(lambda:self.ver(self.ventanasignup.checkBox,self.ventanasignup.txt_pass, self.ventanasignup.txt_pass_con))
             
 
     def ver(self, ch, txt_pass, txt_pass_con):
         if ch.isChecked() == True:
-            self.ventanasign.txt_pass.setEchoMode(QtWidgets.QLineEdit.Normal)
-            self.ventanasign.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Normal)
+            self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Normal)
+            self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Normal)
         else:
-            self.ventanasign.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
-            self.ventanasign.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
+            self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
+            self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
 
 
     def limpiar(self, *args):
@@ -207,15 +197,6 @@ def Mostrar_Sign():
     SingupScreen.Dialog.show()
 
 
-#CONECTA A LA BD
-def conectar(usr='', passwod='', bd=''):
-    # Connect to the database
-    connection = pymysql.connect(host='localhost',
-                                 user=usr,
-                                 password=passwod,
-                                 charset='utf8mb4',
-                                 db=bd)
-    return connection
 
 
 
