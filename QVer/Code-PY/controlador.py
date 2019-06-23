@@ -1,6 +1,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 from validarcorreo import validarcorreo, verexist
+
 from Vista import *
+from Modelo import Usuario
+
 from BDConnector import *
 import pymysql
 import sys
@@ -26,35 +30,10 @@ class Controlador_Login(object):
         self.ventanalogin.btn_cc.clicked.connect(lambda:Mostrar_Sign())
 
 
-    def charge_confirm(self, password, user, info):
-        flag=False
-        for x in usuarios_cursor:
-            try:
-                if (x == user.text()) and (usrpass[usrpass.index(x)+1]==password.text()):
-                    flag=True
-            except Exception as e:
-                pass
-            try:
-                if (x == user.text()) and (usrpass[usrpass.index(x)-1]==password.text()):
-                    flag=True
-            except Exception as e:
-                pass
-
-
-                
-        if flag:
-            info.setText("Valido")
-            info.setStyleSheet("color: rgb(51, 204, 40);")
-            info.show()
-        else:
-            user.clear()
-            password.clear()
-            info.setText("Usuario o contraseña incorrecto")
-            info.setStyleSheet("color: rgb(255, 0, 4);")           
-            info.show()
-        database.close()
-        #print (usrpass)
-
+    def charge_confirm(*args):
+        Datos=Usuario().logearse(args[1], args[2], args[3])
+        if Datos != None:
+            Sesion=Usuario(Datos[1], Datos[2], Datos[3])
 
     def cerrar(self, ventana1):
         self.Dialog.show()
@@ -74,15 +53,9 @@ class Controlador_Signup(object):
     def __init__(self): 
         self.app = QtWidgets.QApplication(sys.argv)
         self.Dialog = QtWidgets.QDialog()
-
         self.ventanasignup = Pantalla_Signup()
         self.ventanasignup.setupUi(self.Dialog)
         self.function()
-
-    def function(self):
-        self.ventanasignup.btn_sgte.clicked.connect(lambda:self.registrar(self.ventanasignup.txt_usr, self.ventanasignup.txt_pass, self.ventanasignup.txt_pass_con, self.ventanasignup.lbl_info, self.ventanasignup.txt_mail))
-        self.ventanasignup.checkBox.toggled.connect(lambda:self.ver(self.ventanasignup.checkBox,self.ventanasignup.txt_pass, self.ventanasignup.txt_pass_con))
-
 
     def ver(self, ch, txt_pass, txt_pass_con):
         if ch.isChecked() == True:
@@ -91,97 +64,15 @@ class Controlador_Signup(object):
         else:
             self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
             self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
-
-        self.ventanasignup = Pantalla_Signup()
-        self.ventanasignup.setupUi(self.Dialog)
-        self.function()
 
     def function(self):
         self.ventanasignup.btn_log.clicked.connect(lambda:Mostrar_Login())
         self.ventanasignup.btn_sgte.clicked.connect(lambda:self.registrar(self.ventanasignup.txt_usr, self.ventanasignup.txt_pass, self.ventanasignup.txt_pass_con, self.ventanasignup.lbl_info, self.ventanasignup.txt_mail))
         self.ventanasignup.checkBox.toggled.connect(lambda:self.ver(self.ventanasignup.checkBox,self.ventanasignup.txt_pass, self.ventanasignup.txt_pass_con))
-            
-
-    def ver(self, ch, txt_pass, txt_pass_con):
-        if ch.isChecked() == True:
-            self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Normal)
-            self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Normal)
-        else:
-            self.ventanasignup.txt_pass.setEchoMode(QtWidgets.QLineEdit.Password)
-            self.ventanasignup.txt_pass_con.setEchoMode(QtWidgets.QLineEdit.Password)
 
 
-    def limpiar(self, *args):
-        for x in args:
-            x.clear()
-
-    def registrar(self, usr, password, passconf, info, mail):
-        #Casos Emptys
-        if len(usr.text()) == 0:
-            info.setText("Campo usuario vacío.")
-            info.show()
-        else:
-            info.hide()
-            if 0 == len(password.text()):
-                info.setText("Campo contraseña vacío.")
-                info.show() 
-            else:
-                #Casos Negativos
-                info.hide()
-                if 3 < len(usr.text()) < 16:
-                    info.hide()
-                    if 7 < len(password.text()):
-                        if passconf.text() == password.text():
-                            #Correo opcional
-                            validar=verexist(usr.text())
-                            if validar:
-                                if len(mail.text())==0:
-                                    database = open("database.txt", "a")
-                                    newuser=usr.text()+","+password.text()+"\n"
-                                    database.write(newuser)
-                                    info.setStyleSheet("color: rgb(50, 200, 40);")
-                                    info.setText("Usuario registrado con exito!(Sin mail).")
-                                    database.close()
-                                    info.show()
-                                    self.limpiar(usr, password, passconf, mail)
-                                else:
-                            #Con correo registrado
-                                    validar=validarcorreo(mail.text())
-                                    info.hide()
-                                    if validar:
-                                        validar=verexist(mail.text())
-                                        if validar:
-                                            database = open("database.txt", "a")
-                                            newuser=usr.text()+","+password.text()+","+mail.text()+"\n"
-                                            database.write(newuser)
-                                            info.setStyleSheet("color: rgb(50, 200, 40);")
-                                            info.setText("Usuario registrado con exito!.")
-                                            database.close()
-                                            info.show()
-                                            self.limpiar(usr, password, passconf, mail)
-                                        else:
-                                            info.setStyleSheet("color: rgb(255, 0, 4);")
-                                            info.setText("Ya existe un usuario regisrado con su mail.")
-                                            info.show()
-                                    else:
-                                        info.setStyleSheet("color: rgb(255, 0, 4);")
-                                        info.setText("El E-mail es invalido.")
-                                        info.show()
-                            else:
-                                info.setStyleSheet("color: rgb(255, 0, 4);")
-                                info.setText("El usuario ya existe.")
-                                info.show()
-                        else:
-                            info.setText("Las contraseñas no coinciden.")
-                            info.show()    
-                    else:
-                        info.setText("Contraseña insegura, coloque más de 8 caracteres.")
-                        info.show()    
-                else:
-                    info.setText("Ingrese solo nombre entre 4 y 15 caracteres.")
-                    info.show()
-
-
+    def registrar(*args):
+        Usuario().validar_registro(args[1], args[2], args[3], args[4], args[5])
 
 #INSTANCIA LAS PANTALLAS
 LoginScreen=Controlador_Login()
