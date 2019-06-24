@@ -410,6 +410,8 @@ class Pantalla_Main_Menu(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
+
+        #Anterior
         self.anteriores = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -422,6 +424,8 @@ class Pantalla_Main_Menu(object):
         self.anteriores.setIcon(icon)
         self.anteriores.setObjectName("anteriores")
         self.horizontalLayout.addWidget(self.anteriores)
+
+        #SetPeli1
         self.peli1 = QtWidgets.QLabel(self.horizontalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -429,12 +433,12 @@ class Pantalla_Main_Menu(object):
         sizePolicy.setHeightForWidth(self.peli1.sizePolicy().hasHeightForWidth())
         self.peli1.setSizePolicy(sizePolicy)
         self.peli1.setText("")
-
-        
         self.peli1.setPixmap(pixmap1)
         self.peli1.setScaledContents(True)
         self.peli1.setObjectName("peli1")
         self.horizontalLayout.addWidget(self.peli1)
+
+        #SetPeli2
         self.peli2 = QtWidgets.QLabel(self.horizontalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -446,6 +450,8 @@ class Pantalla_Main_Menu(object):
         self.peli2.setScaledContents(True)
         self.peli2.setObjectName("peli2")
         self.horizontalLayout.addWidget(self.peli2)
+
+        #SetPeli3
         self.peli3 = QtWidgets.QLabel(self.horizontalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -457,6 +463,8 @@ class Pantalla_Main_Menu(object):
         self.peli3.setScaledContents(True)
         self.peli3.setObjectName("peli3")
         self.horizontalLayout.addWidget(self.peli3)
+
+        #SetPeli4
         self.peli4 = QtWidgets.QLabel(self.horizontalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Ignored)
         sizePolicy.setHorizontalStretch(0)
@@ -468,6 +476,8 @@ class Pantalla_Main_Menu(object):
         self.peli4.setScaledContents(True)
         self.peli4.setObjectName("peli4")
         self.horizontalLayout.addWidget(self.peli4)
+
+        #Siguiente
         self.siguientes = QtWidgets.QPushButton(self.horizontalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -480,6 +490,9 @@ class Pantalla_Main_Menu(object):
         self.siguientes.setIcon(icon1)
         self.siguientes.setObjectName("siguientes")
         self.horizontalLayout.addWidget(self.siguientes)
+
+
+
         self.Qver = QtWidgets.QLabel(Dialog)
         self.Qver.setGeometry(QtCore.QRect(60, 40, 61, 31))
         self.Qver.setStyleSheet("font: 18pt \"Avengeance\";\n"
