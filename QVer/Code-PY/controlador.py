@@ -294,6 +294,7 @@ class controlador_My_Profile(object):
 		self.id=[0,1,2,3]
 		self.Recomendaciones = None
 
+
 		self.limitemg = 0 #En una funcion mas abajo se setea esto
 		self.posicionmg = 0 #Esta es la id inicial que carga en el main menu
 		self.idmg=[0,1,2,3]
@@ -310,6 +311,7 @@ class controlador_My_Profile(object):
 					getPelisUsuario(usuario.getId(),peliUser)
 					ProfileScreen.limite=len(getRecomendacionesPerfil(usuario.getId()))-1
 					RecomendacionesPerfil=getRecomendacionesPerfil(usuario.getId())
+					self.Recomendaciones=RecomendacionesPerfil
 
 					print(RecomendacionesPerfil)
 					self.id[args.index(x)]=RecomendacionesPerfil[self.posicion]-1
@@ -519,12 +521,6 @@ ProfileScreen=controlador_My_Profile()
 #Funcion para actualizar seccion de recomendaciones
 #Aca conseguimos las peliculas q posiblemente le gusten al usuario
 def Actualizar():
-	getPelisUsuario(usuario.getId(),peliUser)
-	ProfileScreen.definirpelis(ProfileScreen.profile.pixmap1,ProfileScreen.profile.pixmap2,ProfileScreen.profile.pixmap3,ProfileScreen.profile.pixmap4)
-	ProfileScreen.definirpelismg(ProfileScreen.profile.pixmap1mg,ProfileScreen.profile.pixmap2mg,ProfileScreen.profile.pixmap3mg,ProfileScreen.profile.pixmap4mg)
-
-#LLAMA A LAS PANTALLAS DE UNA MANERA POCO PRACTICA :v
-def Mostrar_Main():
 	#consigo las variables globales SOLO POR SI ACASO(tuve errores sin esto en su momento)
 	global RecomendacionesQuiz
 	global iterador
@@ -532,14 +528,8 @@ def Mostrar_Main():
 	global PelisGustadas
 	#defino cosas aca para que vean cuando lo abren y porque por ahi no me detecta como global alguna variable
 	PelisGustadas=None
-	RecomendacionesQuiz=None
-	RecomendacionesPerfil=None
 	iterador=0
 	iterador=0
-	Actualizar()
-	#seteamos cosas en las otras pantallas
-
-	
 	RecomendacionesPerfil=None
 	RecomendacionesQuiz=getRecomendacionesQuiz(usuario.getId())
 	ProfileScreen.Recomendaciones= RecomendacionesQuiz
@@ -551,6 +541,19 @@ def Mostrar_Main():
 	ProfileScreen.limite= len(getRecomendacionesPerfil(usuario.getId()))-1 
 	ProfileScreen.posicion = -1
 	ProfileScreen.posicionmg = -1
+
+	
+	getPelisUsuario(usuario.getId(),peliUser)
+	ProfileScreen.definirpelis(ProfileScreen.profile.pixmap1,ProfileScreen.profile.pixmap2,ProfileScreen.profile.pixmap3,ProfileScreen.profile.pixmap4)
+	ProfileScreen.definirpelismg(ProfileScreen.profile.pixmap1mg,ProfileScreen.profile.pixmap2mg,ProfileScreen.profile.pixmap3mg,ProfileScreen.profile.pixmap4mg)
+
+#LLAMA A LAS PANTALLAS DE UNA MANERA POCO PRACTICA :v
+def Mostrar_Main():
+	
+	Actualizar()
+	#seteamos cosas en las otras pantallas
+
+	
 
 
 	MainScreen.Dialog.show()
