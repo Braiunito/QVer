@@ -11,18 +11,9 @@ import sys
 
 import threading
 
-#consigo las variables globales SOLO POR SI ACASO(tuve errores sin esto en su momento)
-global RecomendacionesQuiz
-global iterador
-global RecomendacionesPerfil
-global PelisGustadas
-#defino cosas aca para que vean cuando lo abren y porque por ahi no me detecta como global alguna variable
-PelisGustadas=None
+
 peliUser=list()
 usuario=Usuario()
-RecomendacionesQuiz=None
-RecomendacionesPerfil=None
-iterador=0
 
 class Controlador_Login(object):
 	def __init__(self): 
@@ -534,9 +525,21 @@ def Actualizar():
 
 #LLAMA A LAS PANTALLAS DE UNA MANERA POCO PRACTICA :v
 def Mostrar_Main():
+	#consigo las variables globales SOLO POR SI ACASO(tuve errores sin esto en su momento)
+	global RecomendacionesQuiz
+	global iterador
+	global RecomendacionesPerfil
+	global PelisGustadas
+	#defino cosas aca para que vean cuando lo abren y porque por ahi no me detecta como global alguna variable
+	PelisGustadas=None
+	RecomendacionesQuiz=None
+	RecomendacionesPerfil=None
+	iterador=0
 	iterador=0
 	Actualizar()
 	#seteamos cosas en las otras pantallas
+
+	
 	RecomendacionesPerfil=None
 	RecomendacionesQuiz=getRecomendacionesQuiz(usuario.getId())
 	ProfileScreen.Recomendaciones= RecomendacionesQuiz
@@ -556,6 +559,9 @@ def Mostrar_Main():
 	InfoScreen.Dialog.hide()
 	QuizScreen.Dialog.hide()
 	ProfileScreen.Dialog.hide()
+
+
+
 
 def Mostrar_Profile():
 	Actualizar()
